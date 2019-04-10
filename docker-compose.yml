@@ -1,0 +1,7 @@
+version: "2.1"
+
+services:
+  aspnet:
+    build: ./testApp
+    ports:
+      - "80:80"
