@@ -1,29 +1,13 @@
-FROM balenalib/%%BALENA_ARCH%%-debian as sdk
-
-RUN apt-get update && \
-    apt-get install -y wget "$(apt-cache search --names-only '^libicu[0-9]+$' | cut -d' ' -f1)" && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY install-dotnet.sh /usr/bin/
-RUN /usr/bin/install-dotnet.sh %%BALENA_ARCH%% sdk
+FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:2.2-sdk as sdk
 
 WORKDIR /usr/src/app
 COPY . .
 RUN dotnet publish -o publish
 
-FROM balenalib/%%BALENA_ARCH%%-debian
-
-RUN apt-get update && \
-    apt-get install -y wget "$(apt-cache search --names-only '^libicu[0-9]+$' | cut -d' ' -f1)" && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY install-dotnet.sh /usr/bin/
-RUN /usr/bin/install-dotnet.sh %%BALENA_ARCH%% runtime
+FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:2.2-aspnet
 
 WORKDIR /usr/src/app
 
 COPY --from=sdk /usr/src/app/publish .
 
-EXPOSE 80
-
-CMD [ "dotnet", "testApp.dll", "--urls=http://0.0.0.0:80" ]
+CMD [ "dotnet", "testApp.dll", "--urls=http://0.0.0.0:3000" ]

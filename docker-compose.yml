@@ -4,4 +4,4 @@ services:
   aspnet:
     build: ./testApp
     ports:
-      - "80:80"
+      - "80:3000"
