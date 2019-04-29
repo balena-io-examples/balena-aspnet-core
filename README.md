@@ -4,8 +4,6 @@
 
 We have a simple multi-stage build `Dockerfile` which is in the balena-template format. This is to allow our cloud builders to do variable substitution on things like `%%BALENA_ARCH%%` which make the image suitable for `amd64` and `armv7hf` targets.
 
-The helper script `install-dotnet.sh` is responsible for acquiring the correct verison of the framework binaries for your platform, which is invoked in both the `sdk` and final stages of the build; first to acquire the SDK binaries and then to acquire ONLY the runtime binaries.
-
 ## To deploy this project:
 
 + Create a balena application using the cloud dashboard, e.g. `myAspNetCoreApp`
