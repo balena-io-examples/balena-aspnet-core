@@ -1,10 +1,10 @@
-FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:2.2-sdk as sdk
+FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:3.1-sdk as sdk
 
 WORKDIR /usr/src/app
 COPY . .
 RUN dotnet publish -o publish
 
-FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:2.2-aspnet
+FROM balenalib/%%BALENA_ARCH%%-debian-dotnet:3.1-aspnet
 
 WORKDIR /usr/src/app
 
